@@ -1,0 +1,90 @@
+@import '../../../../styleVariables.scss';
+
+.top-bar{
+  background: #333333;
+  padding: 1rem;
+  min-height: 10rem;
+  color: white;
+}
+
+.pic img{
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.pic img:hover{
+  outline: solid 0.2rem $accent;
+  cursor: pointer;
+}
+.name:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color: $accent;
+}
+
+.favorite-settings, .following-settings{
+  padding:  0.5rem ;
+}
+.follow, .unfollow, .favorite, .unfavorite{
+  opacity: 0.8;
+}
+
+.follow, .unfollow{
+  color: #333333;
+  outline: solid 0.2rem #d6d6d6;
+  border-radius: 1rem;
+  padding: 0 0.3rem;
+}
+.follow{
+  background-color: $homeGrey;
+}
+.unfollow{
+  background-color: #d6d6d6;
+}
+
+.favorite, .unfavorite{
+  outline: solid 0.2rem $accent;
+  border-radius: 1rem;
+  padding: 0 0.3rem;
+}
+.favorite{
+  background-color: #333333;
+  color: $accent;
+}
+.unfavorite{
+  background-color: $accent;
+  color: white;
+}
+
+.favorite-settings .clickable:hover, .following-settings .clickable:hover{
+  cursor: pointer;
+  opacity: 1;
+}
+.favorite-settings .non-clickable:hover, .following-settings .non-clickable:hover{
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.body{
+  width: 100%;
+  min-width: 350px;
+  padding-top: 1rem;
+}
+.body-content{
+  font-size: 20px;
+  font-family: 'Source Serif Pro', serif;
+}
+
+.tags{
+  padding-top: 1rem;
+}
+.tags div{
+  margin: 0 1rem;
+  color: $homeGrey;
+  font-size: 17px;
+  border: solid 0.1rem #d6d6d6;
+  border-radius: 2rem;
+  padding: 0 0.3rem;
+}

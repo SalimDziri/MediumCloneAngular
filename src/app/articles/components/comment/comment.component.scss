@@ -1,0 +1,42 @@
+@import '../../../../styleVariables.scss';
+
+.container{
+  margin-bottom: 1rem;
+}
+
+.commentForm mat-form-field, .body{
+  width: 50vw;
+  max-width: 700px;
+  min-width: 300px;
+}
+
+img{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.body{
+  margin: 0.5rem 0;
+}
+
+.commented-at{
+  margin: 0 0.4rem;
+}
+
+.comment-author:hover{
+  outline: solid 0.2rem $accent;
+  cursor: pointer
+}
+
+.delete-btn:hover{
+  cursor: pointer;
+  color: red;
+}
+
+.cmnt-btn, .delete-btn{
+  place-content: stretch flex-end;
+  align-items: stretch;
+  flex-direction: row;
+  display: flex;
+}

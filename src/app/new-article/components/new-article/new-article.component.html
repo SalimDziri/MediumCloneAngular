@@ -1,0 +1,36 @@
+<div class="container" fxLayout="column" fxLayoutAlign=" center" *ngIf="loggedUser$ | async">
+  <form class="add-article" [formGroup]="addArticleForm" fxLayout="column" fxLayoutAlign=" stretch"  >
+    <mat-form-field  appearance="outline" hideRequiredMarker="true">
+      <mat-label>what's this article title?</mat-label>
+      <input matInput autocomplete="off" placeholder="Article Title" formControlName="title" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" hideRequiredMarker="true">
+      <mat-label>what's this article about?</mat-label>
+      <input matInput autocomplete="off" placeholder="Article Description" formControlName="description" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field  appearance="outline" hideRequiredMarker="true">
+      <mat-label>What's this article's content?</mat-label>
+      <textarea matInput autocomplete="off" placeholder="Article body" formControlName="body" autocomplete="off"></textarea>
+    </mat-form-field>
+    <mat-form-field  appearance="outline" hideRequiredMarker="true">
+      <mat-label>Tag List</mat-label>
+      <mat-chip-list #chipList aria-label="Tags selection">
+        <mat-chip *ngFor="let tag of tagList" (removed)="removeTag(tag)">
+          {{tag}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input placeholder="New Tag" formControlName="tags" autocomplete="off"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addTag($event)">
+      </mat-chip-list>
+    </mat-form-field>
+    <div class="button" fxLayout="column" fxLayoutAlign=" end">
+      <button mat-raised-button [color]="'accent'" *ngIf="operation == 'new'" (click)="create()">Create Article</button>
+      <button mat-raised-button [color]="'accent'" *ngIf="operation == 'update'" (click)="update()">Update Article</button>
+    </div>
+  </form>
+</div>

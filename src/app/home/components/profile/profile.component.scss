@@ -1,0 +1,36 @@
+@import '../../../../styleVariables.scss';
+
+.top-bar{
+  background: $profileBar;
+  padding: 1rem;
+  min-height: 15rem;
+}
+
+.user{
+  height: auto;
+}
+
+.user-image{
+  border-radius: 50%;
+  width: 7rem;
+  height: 7rem;
+}
+
+.user-name{
+  font-size: 2rem;
+}
+
+.user-bio{
+  margin-bottom: 1rem;
+}
+
+.follow-setting{
+  outline: solid 0.2rem $homeGrey;
+  color: $homeGrey;
+  padding: 0.2rem;
+}
+.follow-setting:hover{
+  cursor: pointer;
+  background-color: $homeGrey;
+  color: white;
+}

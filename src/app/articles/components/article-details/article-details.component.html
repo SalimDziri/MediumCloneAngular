@@ -1,0 +1,91 @@
+<div class="container" fxLayout="column" >
+  <!-- Header section -->
+  <div class="top-bar" fxLayout="column" fxLayoutAlign=" center">
+    <!-- Show loading title effects when loading article -->
+    <app-loading-article-details *ngIf="$isLoadingArticle$ | async" [content]="'title'"></app-loading-article-details>
+    <!-- Display article title and author-->
+    <div class="article-header" *ngIf="!($isLoadingArticle$ | async)" fxFlex="70%" >
+      <ng-container *ngIf="articleDetails$ | async as article">
+        <h1 class="title">{{article.title}}</h1>
+        <div class="author" fxLayout="row-wrap" fxLayout.lt-sm="column" >
+          <div class="author-details" fxLayout="row" >
+            <div class="pic"><img (click)="goToProfile(article.author.username)" src="{{article.author.image}}" alt="{{article.author.username}} profile picture"></div>
+            <div fxLayout="column">
+              <div class="name" (click)="goToProfile(article.author.username)">{{article.author.username}}</div>
+              <div class="date">{{article.createdAt | timeAgo}}</div>
+            </div>
+            <!-- Tooltip content -->
+            <ng-template #tooltipTemplate let-username="username" let-image="image">
+              <div class="tooltip-content">
+                <div class="tooltip-header">
+                  <img [src]="image" alt="Author Profile Picture" />
+                  <h3>{{ username }}</h3>
+                </div>
+                <button >Follow</button>
+              </div>
+            </ng-template>
+          </div>
+            <div class="following-settings" fxLayoutAlign=" center" >
+              <!-- If article author is the current logged in user, a profile setting redirct button will be displayed-->
+              <div class="my-account" *ngIf="(combinedData$ | async) == true">
+                <mat-icon>settings</mat-icon> Edit Profile
+              </div>
+              <!-- If article author is already followed, an unfollow button will be displayed-->
+              <div class="follow"  fxLayoutAlign=" center" *ngIf="!article.author.following && (combinedData$ | async) == false" [ngClass]="{'clickable': (isLoadingFollow$ | async) == false, 'non-clickable': (isLoadingFollow$ | async) == true }" 
+              (click)="toggleFollow(article.author.username,article.author.following)">
+                <!-- If the author is being followed and still loading the response, a progress spinner will be displayed -->
+                <mat-spinner *ngIf="isLoadingFollow$ | async" [diameter]="25" ></mat-spinner>
+                <mat-icon *ngIf="!(isLoadingFollow$ | async)">add</mat-icon>&nbsp;Follow {{ article.author.username }}
+              </div>
+              <!-- If article author is not being followed, a follow button will be displayed-->
+              <div class="unfollow" fxLayoutAlign=" center" *ngIf="article.author.following && (combinedData$ | async) == false" [ngClass]="{'clickable': (isLoadingFollow$ | async) == false, 'non-clickable': (isLoadingFollow$ | async) == true }"
+              (click)=" toggleFollow(article.author.username,article.author.following)">
+                <!-- If the author is being unfollowed and still loading the response, a progress spinner will be displayed -->
+                <mat-spinner *ngIf="isLoadingFollow$ | async" [diameter]="25" ></mat-spinner>
+                <mat-icon *ngIf="!(isLoadingFollow$ | async)">add</mat-icon>&nbsp;UnFollow {{ article.author.username }}
+              </div>
+            </div>
+            <div class="favorite-settings" fxLayoutAlign=" center">
+              <!-- If article is not favorited, favorite button will be displayed -->
+              <div class="favorite"  fxLayoutAlign=" center" *ngIf="!article.favorited" [class.non-clickable]="isLoadingFavorite$ | async" [class.clickable]="!(isLoadingFavorite$ | async)"
+                (click)="toggleFavorite(article.slug, article.favorited)">
+                <!-- If article is being add to favorite and still loading the response, a progress spinner will be displayed -->
+                <mat-spinner *ngIf="isLoadingFavorite$ | async" [diameter]="25" ></mat-spinner>
+                <mat-icon *ngIf="!(isLoadingFavorite$ | async)">favorite_border</mat-icon>&nbsp;Favorite article ({{article.favoritesCount}})
+              </div>
+              <!-- If article is already favorited, unfavorite button will be displayed -->
+              <div class="unfavorite" fxLayoutAlign=" center" *ngIf="article.favorited" [class.non-clickable]="isLoadingFavorite$ | async" [class.clickable]="!(isLoadingFavorite$ | async)"
+                (click)="toggleFavorite(article.slug, article.favorited)">
+                <!-- If article is being removed from favorite and still loading the response, a progress spinner will be displayed -->
+                <mat-spinner *ngIf="isLoadingFavorite$ | async" [diameter]="25" ></mat-spinner>
+                <mat-icon *ngIf="!(isLoadingFavorite$ | async)">favorite</mat-icon>&nbsp;UnFavorite article ({{article.favoritesCount}})
+              </div>
+            </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!-- Show loading body effects when loading article -->
+  <app-loading-article-details *ngIf="$isLoadingArticle$ | async" [content]="'body'"></app-loading-article-details>
+  <!-- Body -->
+  <div class="body" fxLayout="column" fxLayoutAlign=" center" *ngIf="!($isLoadingArticle$ | async)">
+    <ng-container *ngIf="articleDetails$ | async as article">
+      <div class="body-content" [innerHTML]="article.body | lineBreaks" ></div>
+      <div class="tags"fxLayout=row fxLayoutAlign="start">
+        <div *ngFor="let tag of article.tagList">{{tag}}</div>
+      </div>
+    </ng-container>
+  </div>
+  <br>
+  <mat-divider ></mat-divider>
+  <br>
+  <!-- Add Comment Section -->
+  <ng-container *ngIf="!($isLoadingArticle$ | async) && ( CurrentLoggedUser$ | async)">
+    <div class="add-comment" fxLayout="column" fxLayoutAlign=" center" >
+        <app-comment [content]="'form'" [slug]="getCurrentSlug()"></app-comment>
+    </div>
+    <div class="comments-list" *ngFor="let comment of (commentsList$ | async)?.slice()?.reverse()" fxLayout="column" fxLayoutAlign=" center">
+      <app-comment [content]="'list'" [commentData]="comment" [slug]="getCurrentSlug()"></app-comment>
+    </div>
+  </ng-container>
+</div>

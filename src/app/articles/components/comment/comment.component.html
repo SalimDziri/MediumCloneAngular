@@ -1,0 +1,30 @@
+<div class="container" *ngIf="content == 'form'">
+  <form class="commentForm" [formGroup]="commentForm">
+    <mat-form-field class="input_field" appearance="outline" hideRequiredMarker="true">
+      <textarea matInput autocomplete="off" placeholder="add a comment" formControlName="myComment"></textarea>
+    </mat-form-field>
+    <div class="form-footer" fxLayout="row">
+      <div class="user" fxFlex="70%" fxLayoutAlign="start">
+        <img src="{{ (currentUser$ | async)?.image }}" alt="">
+      </div>
+      <div class="cmnt-btn" fxFlex="30%" fxlayoutAlign="end">
+        <button *ngIf="!(loadingAddingComment$ | async)" mat-raised-button (click)="addComment(commentForm.value['myComment'])" [color]="'accent'" [disabled]="commentForm.invalid" >Comment</button>
+        <mat-spinner *ngIf="(loadingAddingComment$ | async)" [color]="'accent'" [diameter]="30"></mat-spinner>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="container" *ngIf="content == 'list'">
+  <div class="body" [innerHTML]="commentData?.body | lineBreaks"></div>
+  <div class="form-footer" fxLayout="row">
+    <div class="user" fxFlex="90%" fxLayoutAlign="start center">
+      <img class="comment-author" (click)="goToAuthor(commentData?.author?.username)" src="{{ commentData?.author?.image }}" alt="no alt for you :p">
+      <span class="commented-at">{{commentData?.createdAt | timeAgo}}</span>
+    </div>
+    <div class="delete-btn" fxFlex="10%" fxLayout="row"  *ngIf="(currentUser$ | async)?.username == commentData?.author?.username">
+      <mat-icon *ngIf="!(loadingDeleteComment$ | async)"  (click)="delete(commentData?.id)">delete_outline</mat-icon>
+      <mat-spinner *ngIf="(loadingDeleteComment$ | async)" [color]="'accent'" [diameter]="30"></mat-spinner>
+    </div>
+  </div>
+</div>

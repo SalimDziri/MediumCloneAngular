@@ -1,0 +1,37 @@
+<div class="article-container" fxLayout="column">
+  <div class="header" fxLayout="row">
+    <div class="profile-pic">
+      <img src="{{ article.author.image }}" alt="{{article.author.username}} Profile picture" (click)="goToProfile(article.author.username)">
+    </div>
+    <div class="info" fxLayout="column" fxFlex="50">
+      <div class="author"  (click)="goToProfile(article.author.username)">{{ article.author.username }}</div>
+      <div class="date">{{article.updatedAt | timeAgo }}</div>
+    </div>
+    <div class="favorite-count" fxFlex="50" fxLayoutAlign="end center">
+      <div  *ngIf="(loadingFavorite$ | async) !== article.slug" fxLayoutAlign="center center" class="clickable" [ngClass]="{'favorite': article.favorited, 'non-favorite': !article.favorited}" (click)="article.favorited == true ? unfavorite(article.slug):favorite(article.slug)" >
+        <mat-icon *ngIf="article.favorited == false">favorite_border</mat-icon>
+        <mat-icon *ngIf="article.favorited == true">favorite</mat-icon>
+        {{ article.favoritesCount }}
+      </div>
+      <div *ngIf="(loadingFavorite$ | async) === article.slug" fxLayoutAlign="center center" class="non-clickable" [ngClass]="{'favorite': article.favorited, 'non-favorite': !article.favorited}">
+        <mat-spinner color="white" [diameter]="25" ></mat-spinner>
+        {{ article.favoritesCount }}
+      </div>
+    </div>
+  </div>
+  <div class="title" (click)="goToArticle(article.slug)">
+    <h2>{{ article.title }}</h2>
+  </div>
+  <div class="content" (click)="goToArticle(article.slug)">
+    <pre class="body" [innerHTML]="article.body | shorten | lineBreaks"></pre>
+    <br>
+    <div class="footer" fxLayout="row">
+      <div fxFlex="50" >Read more...</div>
+      <div fxFlex="50" fxLayoutAlign="end">
+        <div *ngFor="let tag of article.tagList" fxLayout="row">
+          <span class="tag-item">{{tag}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

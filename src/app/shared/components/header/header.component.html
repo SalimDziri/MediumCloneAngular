@@ -1,0 +1,29 @@
+<div class="container" fxLayout="row" fxLayout.xs="column">
+    <div class="title"  fxLayoutAlign="center center" fxLayoutAlign.xs="start center"  (click)="goToHome()">
+        Medium Clone
+    </div>
+    <div class="menu" fxFlex fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutAlign.xs="start center">
+            <!-- When user is logged out -->
+            <div class="menu-item" (click)="goToHome()">Home</div>
+            <div *ngIf="auth.isLoggedIn() === false" class="menu-item" (click)="goToSignIn()">Sign in</div>
+            <div *ngIf="auth.isLoggedIn() === false" class="menu-item" (click)="goToSignUp()">Sign up</div>
+
+            <!-- When user is logged in -->
+            <div *ngIf="auth.isLoggedIn() === true" class="menu-item" (click)="newArticle()" fxLayoutAlign=" center">
+                <mat-icon>edit</mat-icon> <span class="menu-item-text"> New Article</span>
+            </div>
+            <div *ngIf="auth.isLoggedIn() === true" class="menu-item" (click)="settings()" fxLayoutAlign=" center">
+                <mat-icon>settings</mat-icon> <span class="menu-item-text"> Settings</span>
+            </div>
+            <div *ngIf="auth.isLoggedIn() === true" class="menu-item"  fxLayoutAlign=" center">
+                <ng-container *ngIf="(loggedUser$ | async) as User">
+                    <span *ngIf="!(loading$ | async)" class="menu-item-text" fxLayout="row" fxLayoutAlign=" center" (click)="profile(User.username)">
+                        <img src="{{ User.image }}" alt=""> {{ User.username }}
+                    </span>
+                </ng-container>
+                    <span *ngIf="(loading$ | async)" >
+                        <mat-spinner color="accent" [diameter]="35" ></mat-spinner>
+                    </span>
+            </div>   
+    </div>
+</div>

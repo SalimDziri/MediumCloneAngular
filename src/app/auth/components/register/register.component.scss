@@ -1,0 +1,48 @@
+@import '../../../../styleVariables.scss';
+
+
+.container{
+    height: 90vh;
+    padding-top: 1rem;
+    font-family: source sans pro,sans-serif
+}
+
+.form-container{
+    min-width: 320px;
+    max-width: 440px;
+    width: 80%;
+    padding: 1rem;
+}
+
+.title h1{
+    margin: 0px 0px 8px;
+}
+
+.error{
+    color: $loginError;
+}
+
+.login{
+    color: $accent;
+}
+.login:hover{
+    cursor: pointer;
+    text-decoration: underline;
+    filter: brightness(0.8)
+}
+
+.signup-btn, .signup-btn-disabled{
+    color: white !important;
+    font-size: 20px;
+    padding: 8px 16px;
+    background-color: $accent;
+}
+.signup-btn-disabled{
+    opacity: 0.8;
+}
+.signup-btn-disabled:hover{
+    cursor: not-allowed;
+}
+.mat-progress-bar-fill::after{
+    color: $accent !important
+}

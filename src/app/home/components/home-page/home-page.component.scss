@@ -1,0 +1,39 @@
+@import '../../../../styleVariables.scss';
+
+.container{
+    height: 90vh;
+    margin: 0 20px
+}
+
+.feed{
+    width: 70%;
+    max-width: 70%;
+    min-width: 350px;
+}
+.tags-container{
+    width: 20%;
+    min-width: 200px;
+    max-width: 300px;
+}
+
+.tags{
+    background-color: $tagsContent;
+    margin: 10px;
+    padding: 5px;
+    height: auto;
+}
+.tags-item{
+    background-color: $tagsItem;
+    margin-right: 7px;
+    margin-bottom: 5px;
+    padding: 3px 7px;
+    border-radius: 10rem;
+    color: white;
+}
+.tags-item:hover{
+    cursor: pointer;
+}
+
+.tag-selected{
+    background-color: $accent !important;
+}

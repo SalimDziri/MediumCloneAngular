@@ -1,0 +1,90 @@
+
+.wrapper {
+  background: #fff;
+  width: 100%;
+  height: auto;
+ }
+ .wrapper-title {
+  background: #333333;
+  width: 80vw;
+  min-width: 350px;
+  height: auto;
+ }
+ 
+ .wrapper-cell{
+   width: 100% !important;
+ }
+ 
+ // Animation
+ @keyframes placeHolderShimmer{
+    0%{
+        background-position: -50vw 0
+    }
+    100%{
+        background-position: 50vw 0
+    }
+ }
+ 
+ .animated-background {
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: #F6F6F6;
+    background: linear-gradient(to right, #F6F6F6 8%, #F0F0F0 18%, #F6F6F6 33%);
+    background-size: 100vw;
+    height: 96px;
+    position: relative;
+ }
+ .animated-background-title {
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #b0b0b0;
+  background: linear-gradient(to right, #b0b0b0 8%, #b0b0b0 18%, #F6F6F6 33%);
+  background-size: 100vw;
+  height: 96px;
+  position: relative;
+}
+ 
+ // Page Elements
+ .image {
+  height: 40px;
+  width: 40px;
+  @extend .animated-background-title;
+ }
+ 
+ .text-line-header{
+   height: 1rem;
+   width: 20vw;
+   margin: 4px 0;
+   @extend .animated-background;
+ }
+ 
+ .text-line {
+  height: 1rem;
+  width: 100%;
+  margin: 4px 0;
+  @extend .animated-background;
+ }
+
+ .text-line-header-title{
+  height: 1rem;
+  width: 20vw;
+  margin: 4px 0;
+  @extend .animated-background-title;
+  }
+
+.text-line-title {
+ height: 1rem;
+ width: 100%;
+ margin: 4px 0;
+ @extend .animated-background-title;
+ }
+ 
+ .title, .body, .image{
+   margin: 0.5rem;
+ }

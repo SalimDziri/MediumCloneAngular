@@ -1,0 +1,16 @@
+syntax: glob
+
+# Ignore caches
+node_modules/
+dist/
+tmp/
+
+# Ignore build artifacts
+*.js.map
+*.js.LICENSE.txt
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.sublime-*
+

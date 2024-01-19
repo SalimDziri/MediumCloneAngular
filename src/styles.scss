@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./styleVariables.scss";
+
+
+body {
+  -webkit-user-select: none; /* Disable text selection for WebKit browsers */
+  -moz-user-select: none; /* Disable text selection for Firefox */
+  -ms-user-select: none; /* Disable text selection for Internet Explorer and Microsoft Edge */
+  user-select: none; /* Disable text selection for other browsers */
+}
+
+  
+.mat-progress-bar-fill::after {
+  background-color: $accent;
+}
+
+
+// changing article details page follow/unfollow progress circle color
+body > app-root > app-article-details > div > div > div > div > div.following-settings > div > mat-spinner > svg > circle{
+  stroke: #333333;
+}
+// changing profile page follow/unfollow progress circle color
+body > app-root > app-profile > div > div > div > div > div > span.follow-setting.ng-star-inserted > span > mat-spinner > svg > circle{
+  stroke: #333333;
+}
+
+// changing article details page favorite/unfavorite progress circle color
+body > app-root > app-article-details > div > div > div > div > div.favorite-settings > div.favorite > mat-spinner > svg > circle{
+  stroke: $accent;
+}
+body > app-root > app-article-details > div > div > div > div > div.favorite-settings > div.unfavorite > mat-spinner > svg > circle{
+  stroke: white;
+}

@@ -1,0 +1,56 @@
+<div class="container" fxLayout="column">
+  <!-- Info section -->
+  <div class="top-bar" fxLayout="column" fxLayoutAlign=" center">
+    <div class="user-info" fxFlex="80%" >
+      <div class="user" *ngIf="getLoadings$ | async as loading">
+        <mat-spinner *ngIf="loading.loadingProfile" color="accent" [diameter]="50" ></mat-spinner>
+        <div class="user-details" *ngIf="loading.loadingProfile == false" fxLayout="column" fxLayoutAlign=" center">
+          <ng-container *ngIf="getProfile$ | async as profile">
+            <img class="user-image"  [src]="profile.image" [alt]="profile.username+' image'">
+            <span class="user-name" >{{profile.username}}</span>
+            <span class="user-bio">{{profile.bio}}</span>
+            <span class="follow-setting">
+              <span *ngIf="(combinedData$ | async) == true" fxLayoutAlign=" center" (click)="profileSettings()">
+                <mat-icon >settings</mat-icon>
+                 Edit Profile
+              </span>
+              <span *ngIf="(combinedData$ | async) == false && (getProfile$ | async)?.following == false" fxLayoutAlign=" center" (click)="follow(profile.username)">
+                <mat-icon *ngIf="(getLoadings$ | async)?.loadingFollow == false" >add</mat-icon>
+                <mat-spinner *ngIf="(getLoadings$ | async)?.loadingFollow == true" [diameter]="25" ></mat-spinner>
+                Follow {{ (getProfile$ | async)?.username }}
+              </span>
+              <span *ngIf="(combinedData$ | async) == false && (getProfile$ | async)?.following == true" fxLayoutAlign=" center" (click)="unfollow(profile.username)">
+                <mat-icon *ngIf="(getLoadings$ | async)?.loadingFollow == false">remove_circle_outline</mat-icon> 
+                <mat-spinner *ngIf="(getLoadings$ | async)?.loadingFollow == true" [diameter]="25" ></mat-spinner>
+                unFollow {{ (getProfile$ | async)?.username }}
+              </span>
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Articles section -->
+  <mat-tab-group animationDuration="0ms" [color]="'accent'" fxFlex="70" class="feed" selectedIndex="0">
+    <!-- MY FEED -->
+    <mat-tab label="Personal Articles" >
+      <app-loading-article *ngIf="(getLoadings$ | async)?.loadingPersonalArticles" ></app-loading-article>
+      <div class="suggestedFeed" *ngIf="!(getLoadings$ | async)?.loadingPersonalArticles && (getPersonalArticles$ | async) as personalArticles">
+        <div class="suggested-list" *ngFor="let personalArticle of personalArticles">
+          <app-article [article]="personalArticle" ></app-article>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- SUGGESTED FEED -->
+    <mat-tab label="Favorited Articles">
+      <app-loading-article *ngIf="(getLoadings$ | async)?.loadingFavoritedArticles" ></app-loading-article>
+      <div class="suggestedFeed" *ngIf="!(getLoadings$ | async)?.loadingFavoritedArticles && (getFavoritedArticles$ | async) as favoritedArticles">
+        <div class="suggested-list" *ngFor="let favoritedArticle of favoritedArticles">
+          <app-article [article]="favoritedArticle" ></app-article>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

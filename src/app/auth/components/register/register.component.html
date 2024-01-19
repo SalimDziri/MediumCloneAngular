@@ -1,0 +1,40 @@
+<div class="container" fxLayout="column" fxLayoutAlign=" center">
+    <div class="form-container">
+        <div class="upper-form" fxLayout="column" fxLayoutAlign=" center">
+            <div class="title">
+                <h1> Sign up </h1>
+            </div>
+            <div class="login" (click)="GoTologin()">
+                Have an account?
+            </div>
+        </div>
+        <div *ngIf="(error$ | async) as error" class="error">
+            <div *ngFor="let errorObj of error.error?.errors | keyvalue">
+                <ul> 
+                  <li>{{ errorObj.key }} {{ errorObj.value }}</li>
+              </ul>
+            </div>
+          </div>
+        <form class="login_form" [formGroup]="registerForm" fxLayout="column" fxLayoutAlign="space-around stretch">
+            <mat-form-field class="input_field" appearance="outline" hideRequiredMarker="true">
+                <input autocomplete="off" matInput placeholder="Username" formControlName="username">
+            </mat-form-field>
+            <mat-form-field class="input_field" appearance="outline" hideRequiredMarker="true">
+                <input matInput autocomplete="off" placeholder="Email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="input_field" appearance="outline" hideRequiredMarker="true">
+                <input matInput autocomplete="off" placeholder="Password" formControlName="password" type="password">
+            </mat-form-field>
+            <div *ngIf="!(loading$ | async)" class="button-container" fxLayout="row" fxLayoutAlign="end">
+                <button mat-button 
+                [ngClass]="{'signup-btn': registerForm.valid, 'signup-btn-disabled': registerForm.invalid}"
+                [disabled]="!registerForm.valid"
+                (click)="signup()"
+                >Sign up</button>
+            </div>
+            <div *ngIf="(loading$ | async)" class="spinner" fxLayout="column" fxLayoutAlign="center center">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+        </form>
+    </div> 
+</div>

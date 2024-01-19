@@ -1,0 +1,45 @@
+<div class="container" *ngIf="!(loading$ | async)" fxLayout="row wrap" fxLayoutAlign="center start" >
+    <mat-tab-group animationDuration="0ms" [color]="'accent'" fxFlex="70" class="feed" [selectedIndex]="(myFeed$ | async) == [] ? 0:1" fxFlexOrder.lt-md="1" fxFlexOrder.gt-md="0">
+      <!-- MY FEED -->
+      <mat-tab label="Your Feed" >
+        <app-loading-article *ngIf="(loadingMyFeed$ | async)" ></app-loading-article>
+        <div class="suggestedFeed" *ngIf="!(loadingMyFeed$ | async) && (myFeed$ | async) as myFollowedArticles">
+          <div class="suggested-list" *ngFor="let myFollowedArticle of myFollowedArticles">
+            <app-article [article]="myFollowedArticle" ></app-article>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </mat-tab>
+      <!-- SUGGESTED FEED -->
+      <mat-tab label="Suggested">
+        <app-loading-article *ngIf="(loadingSuggestedFedd$ | async)" ></app-loading-article>
+        <div class="suggestedFeed" *ngIf="!(loadingSuggestedFedd$ | async) && (suggestedArticles$ | async) as suggestedArticles">
+          <div class="suggested-list" *ngFor="let suggestedArticle of suggestedArticles">
+            <app-article [article]="suggestedArticle" ></app-article>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="tags-container" fxFlex="20" fxFlex.lt-md="95" fxFlexOrder.lt-md="0" fxFlexOrder.gt-md="1">
+        <app-loading-tags *ngIf="(loadingTags$ | async)" ></app-loading-tags>
+        <div class="tags" *ngIf="!(loadingTags$ | async) && (tags$ | async) as tags" fxLayout="row wrap" fxLayoutAlign=" space-between">
+          <p *ngIf="!(loadingTags$ | async)" fxFlex="100">Popular tags</p>
+          <div class="tags-list" *ngFor="let tag of tags" >  
+              <span class="tags-item" fxLayoutAlign=" space-between" (click)="filter(tag)" [ngClass]="{'tag-selected': tag == (selectedTag$ | async) }">
+                  {{ tag }}
+              </span>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="container loading" *ngIf="(loading$ | async)" fxLayout="row" fxLayoutAlign="center center">
+  <span >
+    <mat-spinner color="accent" [diameter]="50" ></mat-spinner>
+  </span>
+</div>
+
+<div class="container error" *ngIf="(error$ | async)" fxLayout="row" fxLayoutAlign="center center">
+  <button mat-button (click)="retry()" [color]="'accent'"> Retry </button>
+</div>
